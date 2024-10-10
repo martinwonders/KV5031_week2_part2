@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QPushButton
+from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QPushButton, QDialog
 
 
 class HelloWorldWindow(QWidget):
@@ -26,6 +26,17 @@ class HelloWorldWindow(QWidget):
     def on_button_clicked(self):
         print("Clicked")
         self.label.setText("<b><font color='blue'>You clicked the button</font></b>")
+        self.show_dialog()
+
+    def show_dialog(self):
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Dialog Box")
+
+        dialog_layout = QVBoxLayout()
+        dialog_layout.addWidget(QLabel("This is a custom dialog box!"))
+
+        dialog.setLayout(dialog_layout)
+        dialog.exec()
 
 app = QApplication(sys.argv)
 window = HelloWorldWindow()
