@@ -1,31 +1,44 @@
 import sys
-from PySide6.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QLabel, QHBoxLayout, QVBoxLayout, QWidget, QLineEdit, QPushButton, QApplication
 
 
-class FormWindow(QWidget):
+class LayoutWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.label = QLabel("Enter your name and age:")
-        self.nameEdit = QLineEdit()
-        self.ageEdit = QLineEdit()
+        # Create widgets
+        self.label = QLabel("Yout name:")
+        self.name_edit = QLineEdit()
         self.submit_button = QPushButton("Submit")
-        self.submit_button.clicked.connect(self.submit_name)
+        self.submit_button.clicked.connect(self.submit)
+        self.clear_button = QPushButton("Clear")
+        self.clear_button.clicked.connect(self.clear)
 
-        # layout setup
-        layout = QVBoxLayout()
-        layout.addWidget(self.label)
-        layout.addWidget(self.nameEdit)
-        layout.addWidget(self.ageEdit)
-        layout.addWidget(self.submit_button)
-        self.setLayout(layout)
+        # Horizontal layout for buttons
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.submit_button)
+        button_layout.addWidget(self.clear_button)
 
-    def submit_name(self):
-        name = self.nameEdit.text()
-        self.label.setText(f"Hello {name}, your age is {self.ageEdit.text()}")
+        # Vertical layout for label, input and buttons
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(self.label)
+        main_layout.addWidget(self.name_edit)
+        main_layout.addLayout(button_layout)
+
+        # Set the Layout
+        self.setLayout(main_layout)
+
+    def submit(self):
+        name = self.name_edit.text()
+        self.label.setText(f"Hello {name}")
+
+    def clear(self):
+        self.name_edit.clear()
+        self.label.setText("")
 
 
 app = QApplication(sys.argv)
-window = FormWindow()
+window = LayoutWindow()
 window.show()
 sys.exit(app.exec())
+
