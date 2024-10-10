@@ -5,7 +5,7 @@ class HelloWorldWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.label = QLabel("Hello World!")
+        self.label = QLabel("Martin A Wonders!")
         layout = QVBoxLayout()
         layout.addWidget(self.label)
         self.setLayout(layout)
