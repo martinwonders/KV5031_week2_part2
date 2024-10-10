@@ -1,44 +1,29 @@
 import sys
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QPushButton, QDialog
+from PySide6.QtWidgets import QApplication, QLineEdit, QWidget, QLabel, QPushButton, QVBoxLayout
 
 
-class HelloWorldWindow(QWidget):
+class FormWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        #Create Label and Button
-        self.label = QLabel("<b><font color='red'>Martin A Wonders!</font></b>")
-        self.button = QPushButton("Change the label!")
+        self.label = QLabel("Enter your name:")
+        self.lineEdit = QLineEdit()
+        self.submit_button = QPushButton("Submit")
+        self.submit_button.clicked.connect(self.submit_name)
 
-        #Connect button click to the slot (method)
-        self.button.clicked.connect(self.on_button_clicked)
-
-        # Set up layout
+        # layout setup
         layout = QVBoxLayout()
         layout.addWidget(self.label)
-        layout.addWidget(self.button)
+        layout.addWidget(self.lineEdit)
+        layout.addWidget(self.submit_button)
         self.setLayout(layout)
 
-        self.setWindowTitle("Hello World App!")
-        self.resize(300, 100)
+    def submit_name(self):
+        name = self.lineEdit.text()
+        self.label.setText(f"Hello {name}")
 
-    # Slot (method) for handling button click
-    def on_button_clicked(self):
-        print("Clicked")
-        self.label.setText("<b><font color='blue'>You clicked the button</font></b>")
-        self.show_dialog()
-
-    def show_dialog(self):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Dialog Box")
-
-        dialog_layout = QVBoxLayout()
-        dialog_layout.addWidget(QLabel("This is a custom dialog box!"))
-
-        dialog.setLayout(dialog_layout)
-        dialog.exec()
 
 app = QApplication(sys.argv)
-window = HelloWorldWindow()
+window = FormWindow()
 window.show()
 sys.exit(app.exec())
